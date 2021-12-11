@@ -1,0 +1,64 @@
+msapi: 1.0.1
+
+metadata: 
+    title: Named Entity Recognition for Ukrainian Language. @molfar Service.
+    id: "@molfar/service/ner-ru"
+    
+components:
+
+    schemas:
+        
+        MESSAGE:
+            type: object
+            required:
+                - type
+                - url
+            properties:
+                type:
+                    type: string
+                url:
+                    type: string
+                    format: uri-reference
+                metadata:
+                    type: object
+                createdAt:
+                    type: string
+                md5:
+                    type: string
+
+service:
+
+    config: 
+        amqp:
+            url:
+                type: string
+                format: uri-reference
+
+    consume:
+        amqp: 
+            $ref: "#/service/config/amqp"
+        queue:
+            name: processed_messages
+            exchange:
+                name: processed_messages
+                mode: fanout
+                options:
+                    durable: true
+                    persistent: true
+            options:
+                noAck: false 
+                exclusive: false   
+        message:
+            $ref: "#/components/schemas/MESSAGE"
+            
+    produce:
+        amqp: 
+            $ref: "#/service/config/amqp"
+        exchange:
+            name: "ner_messages"
+            mode: fanout
+            options:
+                durable: true
+                persistent: true
+        message:
+            $ref: "#/components/schemas/MESSAGE"

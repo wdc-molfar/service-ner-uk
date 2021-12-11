@@ -1,0 +1,43 @@
+{
+  "name": "@molfar/service-ner-uk",
+  "version": "1.0.0",
+  "description": "Named Entity Recognition for Ukrainian Language Molfar Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node ./build/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wdc-molfar/service-ner-proto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wdc-molfar/service-ner-proto/issues"
+  },
+  "homepage": "https://github.com/wdc-molfar/service-ner-proto#readme",
+  "dependencies": {
+    "@molfar/amqp-client": "github:wdc-molfar/amqp-client",
+    "@molfar/csc": "github:wdc-molfar/csc",
+    "@molfar/py-bridge": "github:wdc-molfar/py-bridge",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "axios": "^0.24.0",
+    "chalk": "^4.1.0",
+    "elegant-spinner": "^2.0.0",
+    "execa": "^4.1.0",
+    "extract-zip": "^2.0.1",
+    "fs-extra": "^9.0.1",
+    "inly": "^4.0.8",
+    "jszip": "^3.5.0",
+    "log-update": "^4.0.0",
+    "split-file": "^2.2.1"
+  },
+  "ner": {
+    "service": {
+      "lang": "uk"
+    }
+  }
+}

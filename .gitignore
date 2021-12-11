@@ -22,6 +22,11 @@ lib-cov
 coverage
 *.lcov
 
+
+# MITIE models directory
+MITIE-models/
+
+
 # nyc test coverage
 .nyc_output
 
