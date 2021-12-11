@@ -35,6 +35,14 @@ let service = new ServiceWrapper({
             Middlewares.Schema.validator(this.config.service.consume.message),
             Middlewares.Error.Log,
             Middlewares.Error.BreakChain,
+            
+            Middlewares.Filter( msg =>  {
+                if( msg.content.metadata.nlp.language.locale != "ru") {
+                    console.log("ignore", msg.content.metadata.nlp)
+                    msg.ack()
+                } 
+                return msg.content.metadata.nlp.language.locale == "ru"
+            }),
 
             async (err, msg, next) => {
                 let m = msg.content
