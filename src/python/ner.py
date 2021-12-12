@@ -11,7 +11,7 @@ input_stream = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8')
 
 if __name__=='__main__':
     # lang = sys.argv[1]
-    model_name = MITIE_MODELS_PATH
+    model_name = sys.argv[1]
     ner = named_entity_extractor(model_name)
     input_json = None
     for line in input_stream:

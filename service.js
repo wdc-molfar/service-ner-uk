@@ -1,6 +1,7 @@
 const { ServiceWrapper } = require("@molfar/csc")
 const { AmqpManager, Middlewares } = require("@molfar/amqp-client")
 const { extend } = require("lodash")
+const path = require("path")
 
 
 const NER = require("./src/javascript/bridge")
@@ -8,7 +9,8 @@ const NER = require("./src/javascript/bridge")
      mode: 'text',
      encoding: 'utf8',
      pythonOptions: ['-u'],
-     pythonPath: (process.env.NODE_ENV && process.env.NODE_ENV == "production") ? 'python' : 'python.exe'
+     pythonPath: (process.env.NODE_ENV && process.env.NODE_ENV == "production") ? 'python' : 'python.exe',
+     args: path.resolve(__dirname,"./MITIE-models/model.dat")	
  }
 
  const extractor = new NER(config)
@@ -36,11 +38,11 @@ let service = new ServiceWrapper({
             Middlewares.Error.BreakChain,
             
             Middlewares.Filter( msg =>  {
-                if( msg.content.metadata.nlp.language.locale != "uk") {
+                if( msg.content.metadata.nlp.language.locale != "ru") {
                     console.log(`${ this.config._instance_name || this.config._instance_id} ignore `, msg.content.md5, msg.content.metadata.nlp.language.locale)
                     msg.ack()
                 } 
-                return msg.content.metadata.nlp.language.locale == "uk"
+                return msg.content.metadata.nlp.language.locale == "ru"
             }),
 
             async (err, msg, next) => {
