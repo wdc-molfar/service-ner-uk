@@ -40,7 +40,7 @@ service:
         queue:
             name: processed_messages
             exchange:
-                name: processed_messages
+                name: processed_messages_uk
                 mode: fanout
                 options:
                     durable: true

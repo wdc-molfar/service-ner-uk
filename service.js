@@ -16,7 +16,6 @@ const NER = require("./src/javascript/bridge")
  extractor.start()
 
 
-let counter = 0
 
 let service = new ServiceWrapper({
     consumer: null,
@@ -26,7 +25,7 @@ let service = new ServiceWrapper({
     async onConfigure(config, resolve) {
         this.config = config
 
-        console.log("configure lang-detector", this.config._instance_id)
+        console.log(`configure ${ this.config._instance_name || this.config._instance_id}`)
 
         this.consumer = await AmqpManager.createConsumer(this.config.service.consume)
 
@@ -38,7 +37,7 @@ let service = new ServiceWrapper({
             
             Middlewares.Filter( msg =>  {
                 if( msg.content.metadata.nlp.language.locale != "uk") {
-                    console.log("ignore", msg.content.metadata.nlp)
+                    console.log(`${ this.config._instance_name || this.config._instance_id} ignore `, msg.content.md5, msg.content.metadata.nlp.language.locale)
                     msg.ack()
                 } 
                 return msg.content.metadata.nlp.language.locale == "uk"
@@ -53,8 +52,7 @@ let service = new ServiceWrapper({
                     }
                 )
                 this.publisher.send(m)
-                console.log("NER > ", m.metadata.text, JSON.stringify(m.metadata.nlp, null, " "))
-                counter++
+                console.log(`${ this.config._instance_name || this.config._instance_id} recognize `, m.md5, `${res.data.response.named_entities.length} entities`)
                 msg.ack()
             }
 
@@ -76,13 +74,13 @@ let service = new ServiceWrapper({
     },
 
     onStart(data, resolve) {
-        console.log("start ner", this.config._instance_id)
+        console.log(`start ${ this.config._instance_name || this.config._instance_id}`)
         this.consumer.start()
         resolve({ status: "started" })
     },
 
     async onStop(data, resolve) {
-        console.log("stop ner", this.config._instance_id)
+        console.log(`stop ${ this.config._instance_name || this.config._instance_id}`)
         await this.consumer.close()
         await this.publisher.close()
         resolve({ status: "stoped" })
