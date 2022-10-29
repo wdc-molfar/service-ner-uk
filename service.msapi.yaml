@@ -2,7 +2,7 @@ msapi: 1.0.1
 
 metadata: 
     title: Named Entity Recognition for Ukrainian Language. @molfar Service.
-    id: "@molfar/service/ner-ru"
+    id: "@molfar/service/ner-uk"
     
 components:
 
