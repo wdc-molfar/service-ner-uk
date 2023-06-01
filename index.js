@@ -6,9 +6,6 @@ const { yaml2js, resolveRefs } = require("@molfar/amqp-client")
 
 
 const servicePath = path.resolve(__dirname, "./service.js")
-const config = yaml2js(fs.readFileSync(path.resolve(__dirname, "./service.msapi.yaml")).toString())
-
-
 const delay = interval => new Promise( resolve => {
 	setTimeout( () => {
 		resolve()
@@ -44,12 +41,6 @@ const run = async () => {
 	console.log("Configure", res)
 	res = await service.start()
 	console.log("Start", res)
-	console.log("Running... 10s")
-	await delay(1200000) 
-
-	res = await service.stop()
-	container.terminateInstance(service)
-	
+	console.log("Running...")	
 }
-
 run()

@@ -1,6 +1,6 @@
 const { extend } = require('lodash')
-const elegantSpinner = require('elegant-spinner')
-const logUpdate = require('log-update')
+//const elegantSpinner = require('elegant-spinner')
+//const logUpdate = require('log-update')
 const chalk = require('chalk')
 const unzip = require('./unzip')
 const download = require('./download')
@@ -9,7 +9,7 @@ const fse = require('fs-extra')
 const path = require('path')
 const os = require('os')
 
-let frame = elegantSpinner();
+//let frame = elegantSpinner();
 let config =extend( require(path.resolve(__dirname, "../package.json")).ner, require('./build.config'));
 console.log(`MOLFAR NER SERVICE POSTINSTALL`)
 console.log(`Install MITIE NER model for ${config.models.source[config.service.lang].name} language`)
@@ -62,7 +62,7 @@ fs.mkdtemp(path.join(os.tmpdir(), 'MITIE-'))
 	.then(() => {
 		// if( config.service.mode == "development"){
 			console.log("Install MITIE package")
-			let installer = require('execa')("pip", "install -r requirements.txt".split(" "))
+			let installer = require('execa')("pip3", "install -r requirements.txt".split(" "))
 			let stream = installer.stdout;
 		    stream.pipe(process.stdout);
 			return installer
