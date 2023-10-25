@@ -24,6 +24,15 @@ let service = new ServiceWrapper({
     publisher: null,
     config: null,
 
+    //-------------- Add heartbeat exported method
+
+         async onHeartbeat(data, resolve){
+            resolve({})
+        },
+ 
+    //--------------------------------------------
+
+
     async onConfigure(config, resolve) {
         this.config = config
 
